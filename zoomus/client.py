@@ -133,6 +133,6 @@ class ZoomClient(util.ApiClient):
         return self.components.get("live_stream")
 
     @property
-    def live_stream(self):
+    def live_stream_status(self):
         """Get the live stream status component"""
         return self.components.get("live_stream_status")
