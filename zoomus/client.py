@@ -25,6 +25,7 @@ COMPONENT_CLASSES = {
         "report": components.report.ReportComponentV2,
         "webinar": components.webinar.WebinarComponentV2,
         "recording": components.recording.RecordingComponentV2,
+        "live_stream": components.live_stream.LiveStreamComponentV2
     },
 }
 
