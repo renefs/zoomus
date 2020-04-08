@@ -13,6 +13,6 @@ class LiveStreamStatusComponentV2(base.BaseComponent):
     def update(self, **kwargs):
         util.require_keys(kwargs, "meeting_id")
         return self.patch_request(
-            "/meetings/{}/liveStream/status".format(kwargs.get("meeting_id")), params=kwargs
+            "/meetings/{}/liveStream/status".format(kwargs.get("meeting_id")), data=kwargs
         )
 

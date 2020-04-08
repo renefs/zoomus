@@ -8,11 +8,11 @@ class LiveStreamComponentV2(base.BaseComponent):
     Use this API to update a meeting’s live stream information.
     Prerequisites:
      - Meeting host must have a Pro license.
-    - Scopes: meeting:write:admin meeting:write
+     - Scopes: meeting:write:admin meeting:write
     """
     def update(self, **kwargs):
         util.require_keys(kwargs, "meeting_id")
         return self.patch_request(
-            "/meetings/{}/liveStream".format(kwargs.get("meeting_id")), params=kwargs
+            "/meetings/{}/livestream".format(kwargs.get("meeting_id")), data=kwargs
         )
 
