@@ -26,7 +26,7 @@ COMPONENT_CLASSES = {
         "webinar": components.webinar.WebinarComponentV2,
         "recording": components.recording.RecordingComponentV2,
         "live_stream": components.live_stream.LiveStreamComponentV2,
-        "live_stream_status": components.live_stream_status.LiveStreamStatusComponentV2
+        "live_stream_status": components.live_stream_status.LiveStreamStatusComponentV2,
     },
 }
 
