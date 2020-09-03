@@ -1,11 +1,11 @@
 import unittest
 
+from zoomus import components, ZoomClient, util
+
 try:
     from unittest import mock
 except ImportError:
-    import mock
-
-from zoomus import API_VERSION_2, components, ZoomClient, util
+    import mock  # type: ignore
 
 
 def suite():
@@ -25,7 +25,7 @@ class ZoomClientTestCase(unittest.TestCase):
                 "api_secret": "SECRET",
                 "data_type": "json",
                 "token": util.generate_jwt("KEY", "SECRET"),
-                "version": API_VERSION_2,
+                "version": util.API_VERSION_2,
             },
         )
 
@@ -49,19 +49,28 @@ class ZoomClientTestCase(unittest.TestCase):
         self.assertEqual(
             set(
                 [
+                    "live_stream",
                     "meeting",
+                    "metric",
+                    "past_meeting",
+                    "phone",
+                    "recording",
                     "report",
                     "user",
                     "webinar",
-                    "recording",
-                    "live_stream",
-                    "live_stream_status",
                 ]
             ),
             set(client.components.keys()),
         )
         self.assertIsInstance(
             client.components["meeting"], components.meeting.MeetingComponentV2
+        )
+        self.assertIsInstance(
+            client.components["metric"], components.metric.MetricComponentV2
+        )
+        self.assertIsInstance(
+            client.components["past_meeting"],
+            components.past_meeting.PastMeetingComponentV2,
         )
         self.assertIsInstance(
             client.components["report"], components.report.ReportComponentV2
@@ -76,17 +85,17 @@ class ZoomClientTestCase(unittest.TestCase):
             client.components["recording"], components.recording.RecordingComponentV2
         )
         self.assertIsInstance(
+            client.components["phone"], components.phone.PhoneComponentV2
+        )
+
+        self.assertIsInstance(
             client.components["live_stream"],
             components.live_stream.LiveStreamComponentV2,
-        )
-        self.assertIsInstance(
-            client.components["live_stream_status"],
-            components.live_stream_status.LiveStreamStatusComponentV2,
         )
 
     def test_api_version_defaults_to_2(self):
         client = ZoomClient("KEY", "SECRET")
-        self.assertEqual(client.config["version"], API_VERSION_2)
+        self.assertEqual(client.config["version"], util.API_VERSION_2)
 
     def test_can_get_api_key(self):
         client = ZoomClient("KEY", "SECRET")
@@ -127,6 +136,16 @@ class ZoomClientTestCase(unittest.TestCase):
         self.assertIsInstance(
             client.recording, components.recording.RecordingComponentV2
         )
+
+    def test_can_get_live_stream_component(self):
+        client = ZoomClient("KEY", "SECRET")
+        self.assertIsInstance(
+            client.live_stream, components.live_stream.LiveStreamComponentV2
+        )
+
+    def test_can_get_phone_component(self):
+        client = ZoomClient("KEY", "SECRET")
+        self.assertIsInstance(client.phone, components.phone.PhoneComponentV2)
 
     def test_can_use_client_with_context(self):
         with ZoomClient("KEY", "SECRET") as client:
